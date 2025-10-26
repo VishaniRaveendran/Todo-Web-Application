@@ -386,19 +386,3 @@ The application is designed to run in any Docker-compatible environment:
 - **Security headers**: XSS protection and content type validation
 - **Non-root containers**: Reduced attack surface
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests for new functionality
-5. Ensure all tests pass
-6. Submit a pull request
-
-## 📝 License
-
-This project is created for assessment purposes.
-
----
-
-**Built with ❤️ using modern web technologies**
