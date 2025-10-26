@@ -2,8 +2,10 @@ services:
   - type: web
     name: todo-backend
     env: node
-    buildCommand: cd backend && npm install && npm run build
-    startCommand: cd backend && npm start
+    plan: free
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    rootDir: backend
     envVars:
       - key: NODE_ENV
         value: production
@@ -33,11 +35,13 @@ services:
   - type: web
     name: todo-frontend
     env: static
-    buildCommand: cd frontend && npm install && npm run build
-    staticPublishPath: ./frontend/dist
+    plan: free
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+    rootDir: frontend
     envVars:
       - key: VITE_API_URL
-        value: https://todo-backend.onrender.com/api
+        value: https://todo-backend-xyz.onrender.com/api
 
 databases:
   - name: todo-database
