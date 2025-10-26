@@ -3,7 +3,7 @@ services:
     name: todo-backend
     env: node
     plan: free
-    buildCommand: npm ci && npm run build:backend
+    buildCommand: cd backend && npm ci --cache /tmp/.npm && npm run build
     startCommand: npm start
     envVars:
       - key: NODE_ENV
@@ -12,6 +12,8 @@ services:
         value: 10000
       - key: npm_config_package_manager
         value: npm
+      - key: npm_config_cache
+        value: /tmp/.npm
       - key: DB_HOST
         fromDatabase:
           name: todo-database
@@ -37,13 +39,15 @@ services:
     name: todo-frontend
     env: static
     plan: free
-    buildCommand: npm ci && npm run build:frontend
+    buildCommand: cd frontend && npm ci --cache /tmp/.npm && npm run build
     staticPublishPath: ./frontend/dist
     envVars:
       - key: VITE_API_URL
         value: https://todo-backend-xyz.onrender.com/api
       - key: npm_config_package_manager
         value: npm
+      - key: npm_config_cache
+        value: /tmp/.npm
 
 databases:
   - name: todo-database
