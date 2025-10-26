@@ -14,7 +14,11 @@ app.use(
       // Allow requests with no origin (like mobile apps or curl requests)
       if (!origin) return callback(null, true);
 
-      const allowedOrigins = ["http://localhost:3000", "http://localhost:3001"];
+      const allowedOrigins = [
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "https://healthcheck.railway.app",
+      ];
       if (allowedOrigins.indexOf(origin) !== -1) {
         callback(null, true);
       } else {
@@ -42,6 +46,13 @@ app.use(
 app.options("*", cors());
 
 app.use(express.json());
+
+// Health check endpoint
+app.get("/health", (req, res) => {
+  res
+    .status(200)
+    .json({ status: "healthy", timestamp: new Date().toISOString() });
+});
 
 // Routes
 app.use("/api", taskRoutes);
