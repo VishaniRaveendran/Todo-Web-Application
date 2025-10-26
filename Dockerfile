@@ -10,7 +10,6 @@ COPY backend/package*.json ./backend/
 COPY frontend/package*.json ./frontend/
 
 # Install dependencies
-RUN npm ci
 RUN cd backend && npm ci
 RUN cd frontend && npm ci
 
