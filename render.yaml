@@ -11,6 +11,8 @@ services:
         value: production
       - key: PORT
         value: 10000
+      - key: npm_config_package_manager
+        value: npm
       - key: DB_HOST
         fromDatabase:
           name: todo-database
@@ -42,6 +44,8 @@ services:
     envVars:
       - key: VITE_API_URL
         value: https://todo-backend-xyz.onrender.com/api
+      - key: npm_config_package_manager
+        value: npm
 
 databases:
   - name: todo-database
