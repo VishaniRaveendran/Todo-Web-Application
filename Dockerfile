@@ -5,7 +5,6 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Copy package files
-COPY package*.json ./
 COPY backend/package*.json ./backend/
 COPY frontend/package*.json ./frontend/
 
@@ -17,7 +16,8 @@ RUN cd frontend && npm ci
 COPY . .
 
 # Build the application
-RUN npm run build
+RUN cd backend && npm run build
+RUN cd frontend && npm run build
 
 # Expose port
 EXPOSE 10000
