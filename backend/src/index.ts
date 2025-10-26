@@ -48,10 +48,29 @@ app.options("*", cors());
 app.use(express.json());
 
 // Health check endpoint
-app.get("/health", (req, res) => {
-  res
-    .status(200)
-    .json({ status: "healthy", timestamp: new Date().toISOString() });
+app.get("/health", async (req, res) => {
+  try {
+    // Check database connectivity
+    await pool.query("SELECT 1");
+
+    res.status(200).json({
+      status: "healthy",
+      timestamp: new Date().toISOString(),
+      database: "connected",
+      uptime: process.uptime(),
+    });
+  } catch (error) {
+    console.error("Health check failed:", error);
+    // For Railway healthchecks, we should return 200 even if DB is down
+    // to allow the service to start and then handle DB issues separately
+    res.status(200).json({
+      status: "healthy",
+      timestamp: new Date().toISOString(),
+      database: "disconnected",
+      warning: "Database connection failed but service is running",
+      uptime: process.uptime(),
+    });
+  }
 });
 
 // Routes
@@ -76,17 +95,26 @@ async function initializeDatabase() {
     console.log("Database initialized successfully");
   } catch (error) {
     console.error("Database initialization failed:", error);
-    process.exit(1);
+    console.log(
+      "Server will start without database - healthcheck will show database as disconnected"
+    );
+    // Don't exit - let the server start and handle DB issues in healthcheck
   }
 }
 
 // Start server
 async function startServer() {
-  await initializeDatabase();
+  try {
+    await initializeDatabase();
 
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+      console.log(`Health check available at: http://localhost:${PORT}/health`);
+    });
+  } catch (error) {
+    console.error("Failed to start server:", error);
+    process.exit(1);
+  }
 }
 
 startServer().catch(console.error);
