@@ -343,37 +343,8 @@ Todo-Web-Application/
 - **React Testing Library**: Simple and complete testing utilities
 - **Playwright**: Cross-browser E2E testing with excellent debugging
 
-### DevOps
 
-- **Docker**: Containerization for consistent environments
-- **Docker Compose**: Multi-container application orchestration
-- **Multi-stage builds**: Optimized production images
-- **Health checks**: Service reliability monitoring
+### UI Snap shot 
 
-## 🚀 Deployment
+<img width="2880" height="2698" alt="image" src="https://github.com/user-attachments/assets/6f20e3f2-51e6-484d-a099-c778206726c0" />
 
-The application is designed to run in any Docker-compatible environment:
-
-1. **Production deployment**
-
-   ```bash
-   docker-compose -f docker-compose.yml up -d
-   ```
-
-2. **Scaling**
-
-   ```bash
-   docker-compose up --scale backend=3
-   ```
-
-3. **Environment-specific configuration**
-   - Update environment variables in `docker-compose.yml`
-   - Modify `VITE_API_URL` for frontend API endpoint
-
-## 📊 Performance Considerations
-
-- **Database**: Indexed queries for optimal performance
-- **Backend**: Connection pooling for database efficiency
-- **Frontend**: Code splitting and lazy loading with Vite
-- **Caching**: Nginx static file caching and gzip compression
-- **Health checks**: Automatic service recovery
