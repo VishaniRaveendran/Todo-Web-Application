@@ -26,4 +26,4 @@ ENV NODE_ENV=production
 EXPOSE $PORT
 
 # Start the application
-CMD ["node", "index.js"]
+CMD ["node", "backend/dist/index.js"]
